@@ -6,8 +6,9 @@ type CreateUserRequest struct {
 }
 
 type User struct {
-	Id      string
-	Name    string
-	Email   string
-	Country string
+	Id          string
+	Name        string
+	Email       string
+	Country     string
+	WordsPerDay int16
 }
