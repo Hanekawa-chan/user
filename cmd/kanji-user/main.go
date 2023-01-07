@@ -42,7 +42,7 @@ func main() {
 		zl.Fatal().Err(err).Msg("Database init")
 	}
 
-	authClient := auth.NewAuthClient
+	authClient := auth.NewAuthClient(zl, cfg)
 	userService := user.NewUser(zl, db, authClient, cfg)
 
 	service := app.NewService(zl, cfg, userService)
