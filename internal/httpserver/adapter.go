@@ -31,8 +31,10 @@ func NewAdapter(logger *zerolog.Logger, config *app.Config, service app.Service)
 
 	a.InitMiddlewares(r)
 
-	r.Group(func(r chi.Router) {
-		r.Use(a.authMiddleware)
+	r.Route("/api", func(r chi.Router) {
+		r.Route("/v1", func(r chi.Router) {
+			r.Post("/user", a.createUser)
+		})
 	})
 
 	r.Handle("/metrics", promhttp.Handler())

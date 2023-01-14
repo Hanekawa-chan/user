@@ -2,11 +2,9 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"github.com/Hanekawa-chan/kanji-user/internal/app"
 	"github.com/Hanekawa-chan/kanji-user/internal/database"
 	"github.com/Hanekawa-chan/kanji-user/internal/httpserver"
-	"github.com/Hanekawa-chan/kanji-user/internal/services/auth"
 	"github.com/Hanekawa-chan/kanji-user/internal/version"
 	"github.com/rs/zerolog"
 	"log"
@@ -25,7 +23,6 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(cfg)
 
 	level, err := zerolog.ParseLevel(cfg.Logger.LogLevel)
 	if err != nil {
@@ -41,9 +38,7 @@ func main() {
 		zl.Fatal().Err(err).Msg("Database init")
 	}
 
-	authClient := auth.NewAuthClient(zl, cfg)
-
-	service := app.NewService(zl, cfg, db, authClient)
+	service := app.NewService(zl, cfg, db)
 	httpServerAdapter := httpserver.NewAdapter(zl, cfg, service)
 
 	// Channels for errors and os signals
