@@ -3,6 +3,7 @@ module github.com/Hanekawa-chan/kanji-user
 go 1.19
 
 require (
+	github.com/dlmiddlecote/sqlstats v1.0.2
 	github.com/go-chi/chi v1.5.4
 	github.com/google/uuid v1.3.0
 	github.com/jmoiron/sqlx v1.3.5
