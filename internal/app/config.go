@@ -25,32 +25,33 @@ func Parse() (*Config, error) {
 	auth := config.AuthConfig{}
 	http := config.HTTPConfig{}
 	user := config.UserConfig{}
+	project := "kanji_auth"
 
-	err := envconfig.Process("kanji_auth", &logger)
+	err := envconfig.Process(project, &logger)
 	if err != nil {
 		log.Err(err).Msg("logger config error")
 		return nil, err
 	}
 
-	err = envconfig.Process("kanji_auth", &db)
+	err = envconfig.Process(project, &db)
 	if err != nil {
 		log.Err(err).Msg("db config error")
 		return nil, err
 	}
 
-	err = envconfig.Process("kanji_auth", &auth)
+	err = envconfig.Process(project, &auth)
 	if err != nil {
 		log.Err(err).Msg("auth config error")
 		return nil, err
 	}
 
-	err = envconfig.Process("kanji_auth", &http)
+	err = envconfig.Process(project, &http)
 	if err != nil {
 		log.Err(err).Msg("http config error")
 		return nil, err
 	}
 
-	err = envconfig.Process("kanji_auth", &user)
+	err = envconfig.Process(project, &user)
 	if err != nil {
 		log.Err(err).Msg("http config error")
 		return nil, err

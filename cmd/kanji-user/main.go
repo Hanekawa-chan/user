@@ -7,7 +7,6 @@ import (
 	"github.com/Hanekawa-chan/kanji-user/internal/database"
 	"github.com/Hanekawa-chan/kanji-user/internal/httpserver"
 	"github.com/Hanekawa-chan/kanji-user/internal/services/auth"
-	"github.com/Hanekawa-chan/kanji-user/internal/services/user"
 	"github.com/Hanekawa-chan/kanji-user/internal/version"
 	"github.com/rs/zerolog"
 	"log"
@@ -43,9 +42,8 @@ func main() {
 	}
 
 	authClient := auth.NewAuthClient(zl, cfg)
-	userService := user.NewUser(zl, db, authClient, cfg)
 
-	service := app.NewService(zl, cfg, userService)
+	service := app.NewService(zl, cfg, db, authClient)
 	httpServerAdapter := httpserver.NewAdapter(zl, cfg, service)
 
 	// Channels for errors and os signals

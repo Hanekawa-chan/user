@@ -5,13 +5,15 @@ import "github.com/rs/zerolog"
 type service struct {
 	logger *zerolog.Logger
 	cfg    *Config
-	user   User
+	db     Database
+	auth   Auth
 }
 
-func NewService(logger *zerolog.Logger, cfg *Config, user User) Service {
+func NewService(logger *zerolog.Logger, cfg *Config, db Database, auth Auth) Service {
 	return service{
 		logger: logger,
 		cfg:    cfg,
-		user:   user,
+		db:     db,
+		auth:   auth,
 	}
 }
