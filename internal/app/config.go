@@ -25,7 +25,7 @@ func Parse() (*Config, error) {
 	auth := config.AuthConfig{}
 	http := config.HTTPConfig{}
 	user := config.UserConfig{}
-	project := "kanji_auth"
+	project := "kanji_user"
 
 	err := envconfig.Process(project, &logger)
 	if err != nil {
