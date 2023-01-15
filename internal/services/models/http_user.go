@@ -1,10 +1,10 @@
 package models
 
 type CreateUserRequest struct {
-	Email   string
-	Country string
+	Email   string `json:"email"`
+	Country string `json:"country"`
 }
 
 type CreateUserResponse struct {
-	UserId string
+	UserId string `json:"user_id"`
 }
