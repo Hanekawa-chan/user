@@ -33,12 +33,12 @@ func NewAdapter(logger *zerolog.Logger, config *app.Config, service app.Service)
 
 	r.Route("/api", func(r chi.Router) {
 		r.Route("/v1", func(r chi.Router) {
-			r.Post("/user", a.createUser)
+			r.Post("/user", wrap(a.createUser))
 		})
 	})
 
 	r.Handle("/metrics", promhttp.Handler())
-	r.MethodFunc(http.MethodGet, "/health-check", a.HealthCheck)
+	r.MethodFunc(http.MethodGet, "/health-check", wrap(a.HealthCheck))
 
 	a.server = &http.Server{
 		Addr:    config.HTTPServer.Address,
@@ -68,10 +68,11 @@ func (a *adapter) Shutdown(ctx context.Context) error {
 	return nil
 }
 
-func (a *adapter) HealthCheck(w http.ResponseWriter, _ *http.Request) {
+func (a *adapter) HealthCheck(w http.ResponseWriter, _ *http.Request) error {
 	w.WriteHeader(http.StatusOK)
 	_, err := w.Write([]byte("OK"))
 	if err != nil {
-		return
+		return err
 	}
+	return err
 }

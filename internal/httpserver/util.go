@@ -4,8 +4,24 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/Hanekawa-chan/kanji-user/internal/services/errors"
+	"github.com/rs/zerolog/log"
 	"net/http"
 )
+
+type ErrorHandlerFunc func(http.ResponseWriter, *http.Request) error
+
+func wrap(h ErrorHandlerFunc) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		err := h(w, r)
+		if err != nil {
+			err := JError(w, err)
+			if err != nil {
+				log.Err(err).Msg("can't send error message")
+				return
+			}
+		}
+	}
+}
 
 type ErrorResponse struct {
 	StatusCode     int    `json:"status_code"`
