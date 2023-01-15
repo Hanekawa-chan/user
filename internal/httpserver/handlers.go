@@ -24,15 +24,7 @@ func (a *adapter) createUser(w http.ResponseWriter, r *http.Request) error {
 
 	resp.UserId = id.String()
 
-	marshal, err := json.Marshal(resp)
-	if err != nil {
-		return err
-	}
-
-	_, err = w.Write(marshal)
-	if err != nil {
-		return err
-	}
+	err = sendResponse(w, resp)
 
 	return err
 }
