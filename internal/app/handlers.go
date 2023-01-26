@@ -2,20 +2,24 @@ package app
 
 import (
 	"context"
-	"github.com/Hanekawa-chan/kanji-user/internal/services/models"
 	"github.com/google/uuid"
+	"github.com/kanji-team/user/proto/services"
 )
 
-func (a *service) CreateUser(ctx context.Context, req *models.CreateUserRequest) (uuid.UUID, error) {
+func (a *service) CreateUser(ctx context.Context, req *services.CreateUserRequest) (*services.CreateUserResponse, error) {
 	id := uuid.New()
-	var user models.DBUser
-	user.ToDb(req)
-	user.Id = id
-
-	err := a.db.CreateUser(ctx, &user)
-	if err != nil {
-		return [16]byte{}, err
+	user := &User{
+		Id:          id.String(),
+		Name:        req.Name,
+		Email:       req.Email,
+		Country:     req.Country,
+		WordsPerDay: 0,
 	}
 
-	return id, err
+	err := a.db.CreateUser(ctx, user)
+	if err != nil {
+		return nil, err
+	}
+
+	return &services.CreateUserResponse{UserId: id.String()}, err
 }

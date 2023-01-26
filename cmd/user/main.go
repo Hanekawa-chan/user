@@ -1,11 +1,11 @@
 package main
 
 import (
-	"context"
-	"github.com/Hanekawa-chan/kanji-user/internal/app"
-	"github.com/Hanekawa-chan/kanji-user/internal/database"
-	"github.com/Hanekawa-chan/kanji-user/internal/httpserver"
-	"github.com/Hanekawa-chan/kanji-user/internal/version"
+	"github.com/kanji-team/user/internal/app"
+	"github.com/kanji-team/user/internal/app/config"
+	"github.com/kanji-team/user/internal/database"
+	"github.com/kanji-team/user/internal/grpcserver"
+	"github.com/kanji-team/user/internal/version"
 	"github.com/rs/zerolog"
 	"log"
 	"os"
@@ -19,7 +19,7 @@ func main() {
 	log.Println("Loading Mailing - v", version.Version, "| Commit:", version.Commit)
 
 	// Parse all configs form env
-	cfg, err := app.Parse()
+	cfg, err := config.Parse()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -33,13 +33,13 @@ func main() {
 
 	zl := &logger
 
-	db, err := database.NewAdapter(zl, cfg)
+	db, err := database.NewAdapter(zl, cfg.DB)
 	if err != nil {
 		zl.Fatal().Err(err).Msg("Database init")
 	}
 
-	service := app.NewService(zl, cfg, db)
-	httpServerAdapter := httpserver.NewAdapter(zl, cfg, service)
+	service := app.NewService(zl, cfg.User, db)
+	grpcServer := grpcserver.NewAdapter(zl, cfg.GRPCServer, service)
 
 	// Channels for errors and os signals
 	stop := make(chan error, 1)
@@ -48,7 +48,7 @@ func main() {
 
 	// Receive errors form start bot func into error channel
 	go func(stop chan<- error) {
-		stop <- httpServerAdapter.ListenAndServe()
+		stop <- grpcServer.ListenAndServe()
 	}(stop)
 
 	// Blocking select
@@ -62,12 +62,7 @@ func main() {
 	// Shutdown code
 	zl.Info().Msg("Shutting down...")
 
-	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
-	defer cancel()
-
-	if err := httpServerAdapter.Shutdown(ctx); err != nil {
-		zl.Error().Err(err).Msg("Error shutting down the HTTP server!")
-	}
+	grpcServer.Shutdown()
 
 	time.Sleep(time.Second * 2)
 

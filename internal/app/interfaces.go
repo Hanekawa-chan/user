@@ -2,19 +2,18 @@ package app
 
 import (
 	"context"
-	"github.com/Hanekawa-chan/kanji-user/internal/services/models"
-	"github.com/google/uuid"
+	"github.com/kanji-team/user/proto/services"
 )
 
 type Service interface {
-	CreateUser(ctx context.Context, req *models.CreateUserRequest) (uuid.UUID, error)
+	CreateUser(ctx context.Context, req *services.CreateUserRequest) (*services.CreateUserResponse, error)
 }
 
-type HTTPServer interface {
+type GRPCServer interface {
 	ListenAndServe() error
-	Shutdown(ctx context.Context) error
+	Shutdown()
 }
 
 type Database interface {
-	CreateUser(ctx context.Context, req *models.DBUser) error
+	CreateUser(ctx context.Context, req *User) error
 }

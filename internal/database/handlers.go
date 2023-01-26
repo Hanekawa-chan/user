@@ -2,10 +2,10 @@ package database
 
 import (
 	"context"
-	"github.com/Hanekawa-chan/kanji-user/internal/services/models"
+	"github.com/kanji-team/user/internal/app"
 )
 
-func (a *adapter) CreateUser(ctx context.Context, user *models.DBUser) error {
+func (a *adapter) CreateUser(ctx context.Context, user *app.User) error {
 	var err error
 	query := "insert into user (id, email, country) values(:id, :email, :country)"
 

@@ -1,6 +1,8 @@
 package models
 
-import "github.com/google/uuid"
+import (
+	"github.com/google/uuid"
+)
 
 type DBUser struct {
 	Id          uuid.UUID `db:"id"`
@@ -8,9 +10,4 @@ type DBUser struct {
 	Email       string    `db:"email"`
 	Country     string    `db:"country"`
 	WordsPerDay int16     `db:"words_per_day"`
-}
-
-func (u *DBUser) ToDb(user *CreateUserRequest) {
-	u.Country = user.Country
-	u.Email = user.Email
 }
