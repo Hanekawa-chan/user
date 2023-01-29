@@ -16,16 +16,15 @@ type Kanji struct {
 }
 
 type User struct {
-	Id          string
+	Id          uuid.UUID
 	Name        string
 	Email       string
-	Country     string
 	WordsPerDay int16
 }
 
 type CreateUserRequest struct {
-	Email   string
-	Country string
+	Email string
+	Name  string
 }
 
 type CreateUserResponse struct {

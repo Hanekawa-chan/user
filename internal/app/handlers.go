@@ -9,10 +9,9 @@ import (
 func (a *service) CreateUser(ctx context.Context, req *services.CreateUserRequest) (*services.CreateUserResponse, error) {
 	id := uuid.New()
 	user := &User{
-		Id:          id.String(),
+		Id:          id,
 		Name:        req.Name,
 		Email:       req.Email,
-		Country:     req.Country,
 		WordsPerDay: 0,
 	}
 
