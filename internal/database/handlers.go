@@ -8,7 +8,7 @@ import (
 
 func (a *adapter) CreateUser(ctx context.Context, user *app.User) error {
 	var err error
-	query := "insert into user (id, email, name) values(:id, :email, :name)"
+	query := `insert into "user" (id, email, name) values(:id, :email, :name)`
 
 	_, err = a.db.NamedExecContext(ctx, query, models.FromDomain(user))
 	return err
