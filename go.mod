@@ -1,15 +1,15 @@
-module github.com/kanji-team/user
+module user
 
 go 1.19
 
 require (
+	github.com/Hanekawa-chan/grpc-server v0.0.0-20230318155242-581d5ff69816
 	github.com/dlmiddlecote/sqlstats v1.0.2
 	github.com/golang-migrate/migrate/v4 v4.15.2
 	github.com/google/uuid v1.3.0
 	github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0
 	github.com/jackc/pgx/v5 v5.2.0
 	github.com/jmoiron/sqlx v1.3.5
-	github.com/kanji-team/grpc-server v0.0.0-20230127163306-1ca804701b9e
 	github.com/kelseyhightower/envconfig v1.4.0
 	github.com/prometheus/client_golang v1.14.0
 	github.com/qustavo/sqlhooks/v2 v2.1.0

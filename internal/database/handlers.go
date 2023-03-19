@@ -2,8 +2,8 @@ package database
 
 import (
 	"context"
-	"github.com/kanji-team/user/internal/app"
-	"github.com/kanji-team/user/internal/database/models"
+	"user/internal/app"
+	"user/internal/database/models"
 )
 
 func (a *adapter) CreateUser(ctx context.Context, user *app.User) error {

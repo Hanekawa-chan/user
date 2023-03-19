@@ -1,21 +1,21 @@
 package main
 
 import (
-	"github.com/kanji-team/user/internal/app"
-	"github.com/kanji-team/user/internal/app/config"
-	"github.com/kanji-team/user/internal/database"
-	"github.com/kanji-team/user/internal/grpcserver"
-	"github.com/kanji-team/user/internal/version"
 	"github.com/rs/zerolog"
 	"log"
 	"os"
 	"os/signal"
 	"syscall"
+	"user/internal/app"
+	"user/internal/app/config"
+	"user/internal/database"
+	"user/internal/grpcserver"
+	"user/internal/version"
 )
 
 func main() {
 	//Print version and commit sha
-	log.Println("Loading Mailing - v", version.Version, "| Commit:", version.Commit)
+	log.Println("Loading User - v", version.Version, "| Commit:", version.Commit)
 
 	// Parse all configs form env
 	cfg, err := config.Parse()

@@ -1,16 +1,16 @@
 package grpcserver
 
 import (
+	"github.com/Hanekawa-chan/grpc-server"
 	grpc_prometheus "github.com/grpc-ecosystem/go-grpc-prometheus"
-	"github.com/kanji-team/grpc-server"
-	"github.com/kanji-team/user/internal/app"
-	"github.com/kanji-team/user/proto/services"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
 	"net"
 	"net/http"
+	"user/internal/app"
+	"user/proto/services"
 )
 
 type adapter struct {

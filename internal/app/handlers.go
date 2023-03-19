@@ -3,16 +3,15 @@ package app
 import (
 	"context"
 	"github.com/google/uuid"
-	"github.com/kanji-team/user/proto/services"
+	"user/proto/services"
 )
 
 func (a *service) CreateUser(ctx context.Context, req *services.CreateUserRequest) (*services.CreateUserResponse, error) {
 	id := uuid.New()
 	user := &User{
-		Id:          id,
-		Name:        req.Name,
-		Email:       req.Email,
-		WordsPerDay: 0,
+		Id:    id,
+		Name:  req.Name,
+		Email: req.Email,
 	}
 
 	err := a.db.CreateUser(ctx, user)

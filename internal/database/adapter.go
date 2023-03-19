@@ -10,11 +10,11 @@ import (
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"github.com/jackc/pgx/v5/stdlib"
 	"github.com/jmoiron/sqlx"
-	"github.com/kanji-team/user/internal/app"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/qustavo/sqlhooks/v2"
 	"github.com/rs/zerolog"
 	"time"
+	"user/internal/app"
 )
 
 type adapter struct {
@@ -45,6 +45,9 @@ func NewAdapter(logger *zerolog.Logger, config *Config) (app.Database, error) {
 		"sslmode=disable search_path=public default_query_exec_mode=cache_describe",
 		config.Host, config.Port, config.User, config.Name, config.Password)
 	db, err := sqlx.Connect("postgresWrapped", dsn)
+	if err != nil {
+		return nil, err
+	}
 
 	// Create a new collector, the name will be used as a label on the metrics
 	collector := sqlstats.NewStatsCollector("user", db)

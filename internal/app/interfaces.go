@@ -2,7 +2,7 @@ package app
 
 import (
 	"context"
-	"github.com/kanji-team/user/proto/services"
+	"user/proto/services"
 )
 
 type Service interface {

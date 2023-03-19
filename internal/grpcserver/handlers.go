@@ -2,7 +2,7 @@ package grpcserver
 
 import (
 	"context"
-	"github.com/kanji-team/user/proto/services"
+	"user/proto/services"
 )
 
 func (a *adapter) CreateUser(ctx context.Context, request *services.CreateUserRequest) (*services.CreateUserResponse, error) {
